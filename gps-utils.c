@@ -35,6 +35,7 @@
 -- PROGRAMMER: Wayne Huang
 --
 -- INTERFACE: void read_gps(struct gps_data_t* gpsdata)
+--			   struct gps_data_t* gpsdata: struct containing all the data read from the GPS device
 --
 -- RETURNS: void
 --
@@ -81,6 +82,7 @@ void read_gps(struct gps_data_t* gpsdata) {
 -- PROGRAMMER: Wayne Huang
 --
 -- INTERFACE: error_process(int code)
+--              int code: the code associated with the error that occured 
 --
 -- RETURNS: void
 --
