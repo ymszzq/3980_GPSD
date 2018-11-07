@@ -49,7 +49,7 @@ void read_gps(struct gps_data_t* gpsdata) {
 			if (timeoutCount >= 10) {
 				/* if device has not responded for 10 timeouts terminate program 
 				   with GPS_TIMEOUT error code*/
-				get_error(GPS_TIMEOUT);
+				error_process(GPS_TIMEOUT);
 				break;
 			}
 			timeoutCount++;
@@ -60,7 +60,7 @@ void read_gps(struct gps_data_t* gpsdata) {
 			if (gps_read(gpsdata) == -1) {
 				/* failed to read data from gps error handling */
 				fprintf(stderr, "Fail to get data \n");
-				get_error (errno == 0 ? GPS_GONE : GPS_ERROR);
+				error_process (errno == 0 ? GPS_GONE : GPS_ERROR);
 				break;
 			}
 			else {
@@ -80,14 +80,14 @@ void read_gps(struct gps_data_t* gpsdata) {
 --
 -- PROGRAMMER: Wayne Huang
 --
--- INTERFACE: get_error(int code)
+-- INTERFACE: error_process(int code)
 --
 -- RETURNS: void
 --
 -- NOTES:
 -- The error handling for non-functioning gps states. Will log the type of error and break from the read loop.
 ----------------------------------------------------------------------------------------------------------------------*/
-void get_error(int code) {
+void error_process(int code) {
 	switch (code) {
 	case GPS_QUIT:
 		break;
