@@ -44,11 +44,11 @@
 void read_gps(struct gps_data_t* gpsdata) {
 	int timeoutCount = 0;
 	while(true) {
-		// set timeout to be 1 second (1000000 micro seconds)
+		/* set timeout to be 1 second (1000000 micro seconds)*/
 		if (!gps_waiting(gpsdata, 1000000)) {
 			if (timeoutCount >= 10) {
-				// if device has not responded for 10 timeouts terminate program 
-				// with GPS_TIMEOUT error code
+				/* if device has not responded for 10 timeouts terminate program 
+				   with GPS_TIMEOUT error code*/
 				cleanup(GPS_TIMEOUT, gpsdata);
 			}
 			timeoutCount++;
@@ -57,12 +57,12 @@ void read_gps(struct gps_data_t* gpsdata) {
 			timeoutCount = 0;
 			errno = 0;
 			if (gps_read(gpsdata) == -1) {
-				// failed to read data from gps error handling
+				/* failed to read data from gps error handling */
 				fprintf(stderr, "Fail to get data \n");
 				cleanup (errno == 0 ? GPS_GONE : GPS_ERROR, gpsdata);
 			}
 			else {
-				// passes gps data to the gps print function
+				/* passes gps data to the gps print function */
 				printGps(gpsdata);
 			}
 		}
