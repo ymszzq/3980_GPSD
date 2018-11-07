@@ -6,7 +6,7 @@
 --
 --FUNCTIONS :
 	-- void read_gps(struct gps_data_t* gpsdata)
-	-- void get_error(int code)
+	-- void error_process(int code)
 	--
 	--DATE: November 6, 2018
 	--
@@ -72,7 +72,7 @@ void read_gps(struct gps_data_t* gpsdata) {
 }
 
 /*------------------------------------------------------------------------------------------------------------------
--- FUNCTION: get_error
+-- FUNCTION: error_process
 --
 -- DATE: November 6, 2018
 --
