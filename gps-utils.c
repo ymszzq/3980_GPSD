@@ -88,9 +88,6 @@ void read_gps(struct gps_data_t* gpsdata) {
 -- The error handling for non-functioning gps states. Will log the type of error and break from the read loop.
 ----------------------------------------------------------------------------------------------------------------------*/
 void get_error(int code) {
-	gps_stream(gpsdata, WATCH_DISABLE, NULL);
-	gps_close(gpsdata);
-
 	switch (code) {
 	case GPS_QUIT:
 		break;
@@ -106,6 +103,4 @@ void get_error(int code) {
 	default:
 		break;
 	}
-
-	exit(0);
 }
