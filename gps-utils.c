@@ -6,7 +6,7 @@
 --
 --FUNCTIONS :
 	-- void read_gps(struct gps_data_t* gpsdata)
-	-- void cleanup(int code, struct gps_data_t* gpsdata)
+	-- void get_error(int code)
 	--
 	--DATE: November 6, 2018
 	--
@@ -20,7 +20,7 @@
 	-- will be passed to the print function in another file.
 	--
 	-- If any errors occur, the error checking function will determine what the error is based on the error code and
-	-- then print relevant information and terminate the program.
+	-- then print relevant information.
 	--
 ----------------------------------------------------------------------------------------------------------------------*/
 #include "gps-utils.h"
@@ -49,7 +49,8 @@ void read_gps(struct gps_data_t* gpsdata) {
 			if (timeoutCount >= 10) {
 				/* if device has not responded for 10 timeouts terminate program 
 				   with GPS_TIMEOUT error code*/
-				cleanup(GPS_TIMEOUT, gpsdata);
+				get_error(GPS_TIMEOUT);
+				break;
 			}
 			timeoutCount++;
 		}
@@ -59,7 +60,8 @@ void read_gps(struct gps_data_t* gpsdata) {
 			if (gps_read(gpsdata) == -1) {
 				/* failed to read data from gps error handling */
 				fprintf(stderr, "Fail to get data \n");
-				cleanup (errno == 0 ? GPS_GONE : GPS_ERROR, gpsdata);
+				get_error (errno == 0 ? GPS_GONE : GPS_ERROR);
+				break;
 			}
 			else {
 				/* passes gps data to the gps print function */
@@ -70,7 +72,7 @@ void read_gps(struct gps_data_t* gpsdata) {
 }
 
 /*------------------------------------------------------------------------------------------------------------------
--- FUNCTION: cleanup
+-- FUNCTION: get_error
 --
 -- DATE: November 6, 2018
 --
@@ -78,14 +80,14 @@ void read_gps(struct gps_data_t* gpsdata) {
 --
 -- PROGRAMMER: Wayne Huang
 --
--- INTERFACE: cleanup(int code, struct gps_data_t* gpsdata)
+-- INTERFACE: get_error(int code)
 --
 -- RETURNS: void
 --
 -- NOTES:
--- The error handling for non-functioning gps states. Will log the type of error and terminate the program.
+-- The error handling for non-functioning gps states. Will log the type of error and break from the read loop.
 ----------------------------------------------------------------------------------------------------------------------*/
-void cleanup(int code, struct gps_data_t* gpsdata) {
+void get_error(int code) {
 	gps_stream(gpsdata, WATCH_DISABLE, NULL);
 	gps_close(gpsdata);
 

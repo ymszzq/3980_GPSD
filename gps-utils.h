@@ -13,6 +13,6 @@
 #define GPS_TIMEOUT	-3	
 
 void read_gps(struct gps_data_t*);
-void cleanup(int,struct gps_data_t*);
+void get_error(int);
 
 #endif
